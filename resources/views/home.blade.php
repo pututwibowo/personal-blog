@@ -12,10 +12,5 @@
       @include('_posts')
     </div>
   </div>
-  
-
- 
-
-
 
 @endsection
