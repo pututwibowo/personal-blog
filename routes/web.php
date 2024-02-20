@@ -19,4 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('/{post}', [PostController::class, 'show'])->name('post');
 
+Route::get('/dashboard/posts/check-slug', [PostController::class, 'checkSlug']);
+
 Route::resource('/dashboard/posts', DashboardPostController::class);

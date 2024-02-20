@@ -8,7 +8,7 @@
     <h1 class="text-5xl font-bold text-gray-700">Dashboard</h1>
     <button class="flex items-center gap-2 mt-3 border-2 rounded-lg px-4 py-2 bg-gray-100 hover:bg-gray-200">
       <x-fas-circle-plus class="h-6 text-gray-500 cursor-pointer "/>  
-     <p class="text-lg font-bold text-gray-700">Create New Post</p> 
+      <a href="{{ route('posts.create') }}" class="text-lg font-bold text-gray-700">Create New Post</a> 
     </button>
     <table class="mt-5 xl:w-full table-auto">
       <thead class="bg-slate-700">
