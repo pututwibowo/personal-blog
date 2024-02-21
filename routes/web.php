@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardPostController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,8 +17,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::get('/login', [LoginController::class, 'index']);
+
 Route::get('/', [PostController::class, 'index'])->name('home');
-Route::get('/{post}', [PostController::class, 'show'])->name('post');
+Route::get('/post/{post}', [PostController::class, 'show'])->name('post');
+
+
 
 Route::get('/dashboard/posts/check-slug', [PostController::class, 'checkSlug']);
 
