@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/login', [LoginController::class, 'index']);
+Route::get('/registration', [RegistrationController::class, 'index']);
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('/post/{post}', [PostController::class, 'show'])->name('post');
