@@ -33,7 +33,15 @@
               <a href="{{ route('posts.edit',['post'=>$post->slug]) }}">
                 <x-fas-pen class="h-6 text-orange-400 hover:text-orange-500 cursor-pointer"/>
               </a>
-              <x-fas-trash class="h-6 text-red-400 hover:text-red-500 cursor-pointer"/>
+              <form action="{{ route('posts.destroy',$post->slug) }}" method="POST" class="flex items-center m-0">
+                @csrf
+                @method('DELETE')
+                <button type="submit" >
+                  <x-fas-trash class="h-6 text-red-400 hover:text-red-500 cursor-pointer"/>
+                </button>
+                
+              </form>
+              
             </div>
 
           </td>
