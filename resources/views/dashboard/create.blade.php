@@ -32,7 +32,7 @@
       @csrf
       <div class="mb-3">
         <label for="title" class="block text-xl text-gray-800 font-medium ">Title</label>
-        <input type="text" class="border-2 w-full h-11 rounded-md shadow-md shadow-pink-500/15 border-pink-500/40 outline-pink-500" id="title" name="title" value="{{ old('title') }}" required autofocus>
+        <input type="text" class="border-2 w-full h-11 rounded-md shadow-md " id="title" name="title" value="{{ old('title') }}" autofocus>
         @error('title')
         <div class="text-red-500">
           {{ $message }}
@@ -42,9 +42,9 @@
 
       <div class="mb-3">
         <label for="slug" class="block text-xl text-gray-800 font-medium ">Slug</label>
-        <input type="text" class="border-2 w-full h-11 rounded-md shadow-md shadow-pink-500/15 border-pink-500/40 outline-pink-500" id="slug" name="slug" value="{{ old('slug') }}" required>
+        <input type="text" class="border-2 w-full h-11 rounded-md shadow-md " id="slug" name="slug" value="{{ old('slug') }}" >
         @error('slug')
-        <div class="invalid-feedback">
+        <div class="text-red-500">
           {{ $message }}
         </div>
         @enderror
@@ -52,10 +52,10 @@
 
       <div class="mb-3">
         <label for="image" class="block text-xl text-gray-800 font-medium">Image file input</label>
-        <img class="img-preview img-fluid mb-3 col-sm-5">
-        <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" onchange="previewImage()">
+        <img id="img-preview" class="mb-2 w-64">
+        <input class="" type="file" id="image" name="image" onchange="previewImage()">
         @error('image')
-        <div class="invalid-feedback">
+        <div class="text-red-500">
           {{ $message }}
         </div>
         @enderror
@@ -63,7 +63,12 @@
 
       <div class="mb-3">
         <label for="category" class="block text-xl text-gray-800 font-medium">Category </label>
-        <select id="category" name="category_id" class="bg-gray-50 border border-pink-300 text-gray-700 text-lg rounded-md outline-pink-500 focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 ">
+        @error('category_id')
+        <div class="text-red-500">
+          {{ $message }}
+        </div>
+        @enderror
+        <select id="category" name="category_id" class="bg-gray-50 border text-gray-700 text-lg rounded-md block w-full p-2.5 @error('category_id')  border-red-500 @enderror">
           <option >Open this select menu</option>
           @foreach($categories as $category)
           <option value="{{ $category->id }}" @selected(old('category_id')==$category->id)>{{ $category->name }}</option>
@@ -72,11 +77,11 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label fw-bold m-0">Body</label>
+        <label class="block text-xl text-gray-800 font-medium">Body</label>
         @error('body')
-        <small class="text-danger d-block mb-1">
+        <div class="text-red-500">
           {{ $message }}
-        </small>
+        </div>
         @enderror
         <input id="body" type="hidden" name="body" value="{{ old('body') }}">
         <trix-editor input="body"></trix-editor>
@@ -106,7 +111,7 @@
 
     function previewImage(){
       const image = document.querySelector('#image');
-      const imagePreview = document.querySelector('.img-preview');
+      const imagePreview = document.querySelector('#img-preview');
 
       imagePreview.style.display ='block';
 

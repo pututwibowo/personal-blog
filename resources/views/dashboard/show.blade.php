@@ -21,6 +21,9 @@
       <x-fas-pen class="h-6 text-orange-400 hover:text-orange-500 cursor-pointer"/>
       <x-fas-trash class="h-6 text-red-400 hover:text-red-500 cursor-pointer"/>
     </div>
+    @if($post->image)
+      <img src="/storage/{{ $post->image }}" class="my-5 h-96">
+    @endif
     <div class="text-lg mt-8 text-justify text-gray-800 leading-relaxed">
       {!! $post->body !!}
     </div>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class DashboardPostController extends Controller
 {
@@ -23,8 +25,10 @@ class DashboardPostController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        return view('dashboard.create', compact('categories'));
+
+        return view('dashboard.create', [
+            'categories' => Category::all()
+        ]);
     }
 
     /**
@@ -32,7 +36,24 @@ class DashboardPostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'title' => 'required|max:255',
+            'slug' => 'required|unique:posts',
+            'category_id' => 'required|exists:categories,id',
+            'image' => 'image|file|max:1024',
+            'body' => 'required'
+        ]);
+
+        if ($request->file('image')) {
+            $validateData['image'] = $request->file('image')->store('post-images');
+        }
+
+        $validateData['user_id'] = Auth::id();
+        $validateData['excerpt'] = Str::limit(strip_tags($validateData['body']), 200);
+
+        Post::create($validateData);
+
+        return redirect()->route('posts.index')->with('success', 'New post has been added!');
     }
 
     /**
