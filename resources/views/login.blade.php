@@ -7,21 +7,19 @@
   <div class="xl:w-1/3 mx-auto mt-5 mb-20">
     <div class="mt-10">
       @if(session()->has('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="text-lg font-bold text-green-600" role="alert">
           {{ session('success') }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
       @endif
-
+      
       @if(session()->has('loginFailed'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="text-lg font-bold text-red-600" role="alert">
           {{ session('loginFailed') }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
       @endif
 
         
-      <form class="bg-white rounded-md shadow-2xl p-5">
+      <form action="/login" method="POST" class="bg-white rounded-md shadow-2xl p-5">
         @csrf
         <h1 class="text-gray-800 font-bold text-2xl mb-1">Login</h1>
         <p class="text-sm font-normal text-gray-600 mb-8">Welcome Back </p>
