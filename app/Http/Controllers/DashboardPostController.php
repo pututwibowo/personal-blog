@@ -13,8 +13,9 @@ class DashboardPostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        return view('dashboard.index', compact('posts'));
+        return view('dashboard.index', [
+            'posts' => Post::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get()
+        ]);
     }
 
     /**
