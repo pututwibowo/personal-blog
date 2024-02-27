@@ -30,8 +30,9 @@
               <a href="{{ route('posts.show',['post'=>$post->slug]) }}">
                 <x-fas-eye class="h-6 text-blue-400 hover:text-blue-500"/> 
               </a>
-              
-              <x-fas-pen class="h-6 text-orange-400 hover:text-orange-500 cursor-pointer"/>
+              <a href="{{ route('posts.edit',['post'=>$post->slug]) }}">
+                <x-fas-pen class="h-6 text-orange-400 hover:text-orange-500 cursor-pointer"/>
+              </a>
               <x-fas-trash class="h-6 text-red-400 hover:text-red-500 cursor-pointer"/>
             </div>
 

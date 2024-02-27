@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class DashboardPostController extends Controller
@@ -67,17 +68,45 @@ class DashboardPostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        //
+        return view('dashboard.edit', [
+            'post' => $post,
+            'categories' => Category::all()
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $rules = [
+            'title' => 'required|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'image' => 'image|file|max:1024',
+            'body' => 'required'
+        ];
+
+        if ($request->slug != $post->slug) {
+            $rules['slug'] = 'required|unique:posts';
+        }
+
+        $validateData = $request->validate($rules);
+
+        if ($request->file('image')) {
+            if ($post->image) {
+                Storage::delete($post->image);
+            }
+            $validateData['image'] = $request->file('image')->store('post-images');
+        }
+
+        $validateData['user_id'] = Auth::id();
+        $validateData['excerpt'] = Str::limit(strip_tags($validateData['body']), 200);
+
+        Post::where('id', $post->id)->update($validateData);
+
+        return redirect()->route('posts.index')->with('success', 'Update has been success!');
     }
 
     /**
