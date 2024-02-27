@@ -36,7 +36,7 @@
               <form action="{{ route('posts.destroy',$post->slug) }}" method="POST" class="flex items-center m-0">
                 @csrf
                 @method('DELETE')
-                <button type="submit" >
+                <button type="submit" onclick="return confirm('Anda yakin ingin menghapus ?')">
                   <x-fas-trash class="h-6 text-red-400 hover:text-red-500 cursor-pointer"/>
                 </button>
                 
