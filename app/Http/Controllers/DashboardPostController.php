@@ -8,9 +8,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Gate;
 
 class DashboardPostController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      */
@@ -62,7 +65,12 @@ class DashboardPostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('dashboard.show', compact('post'));
+        if (!Gate::allows('is_user', $post)) {
+            return redirect()->back();
+        }
+        return view('dashboard.show', [
+            'post' => $post
+        ]);
     }
 
     /**
@@ -70,6 +78,9 @@ class DashboardPostController extends Controller
      */
     public function edit(Post $post)
     {
+        if (!Gate::allows('is_user', $post)) {
+            return redirect()->back();
+        }
         return view('dashboard.edit', [
             'post' => $post,
             'categories' => Category::all()
@@ -81,6 +92,10 @@ class DashboardPostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        if (!Gate::allows('is_user', $post)) {
+            return redirect()->back();
+        }
+
         $rules = [
             'title' => 'required|max:255',
             'category_id' => 'required|exists:categories,id',
@@ -114,6 +129,10 @@ class DashboardPostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if (!Gate::allows('is_user', $post)) {
+            return redirect()->back();
+        }
+
         if ($post->image) {
             Storage::delete($post->image);
         }
