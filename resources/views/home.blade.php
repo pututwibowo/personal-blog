@@ -11,6 +11,10 @@
     <div class="mt-10">
       @include('_posts')
     </div>
+    <div class="mt-3">
+      {{ $posts->links() }}
+    </div>
+    
   </div>
 
 @endsection

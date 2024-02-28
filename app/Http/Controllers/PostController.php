@@ -8,11 +8,18 @@ use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::all();
-
-        return view('home', compact('posts'));
+        $query = Post::latest();
+        $query->when(
+            $request->search ?? false,
+            fn ($query, $search) =>
+            $query->where('title', 'like', '%' . $search . '%')
+                ->orWhere('body', 'like', '%' . $search . '%')
+        );
+        return view('home', [
+            "posts" => $query->simplePaginate(5)->withQueryString()
+        ]);
     }
 
     public function show(Post $post)

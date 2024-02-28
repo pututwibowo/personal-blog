@@ -11,6 +11,7 @@ class Post extends Model
     use HasFactory, Sluggable;
 
     protected $guarded = ['id'];
+    protected $with = ['author', 'category'];
 
     public function category()
     {

@@ -4,7 +4,6 @@
   </h1>
   <nav class="flex items-center gap-6 me-5 text-xl text-gray-400 font-bold ">
     <a href="/">Garden</a>
-    <a href="/apps">Apps</a>
     
     @auth
        <a href={{ route('posts.index') }} >Dashboard</a>

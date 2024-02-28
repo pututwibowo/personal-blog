@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
-Route::post('/login', [LoginController::class, 'authenticate']);
-Route::post('/logout', [LoginController::class, 'logout']);
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
+Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth');
 
 Route::get('/registration', [RegistrationController::class, 'index']);
 Route::post('/registration', [RegistrationController::class, 'store']);
@@ -32,4 +32,4 @@ Route::get('/post/{post}', [PostController::class, 'show'])->name('post');
 
 Route::get('/dashboard/posts/check-slug', [PostController::class, 'checkSlug']);
 
-Route::resource('/dashboard/posts', DashboardPostController::class);
+Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth');
